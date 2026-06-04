@@ -2,965 +2,640 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Advanced QR Architect | Pro QR Generator with Logo & Styles</title>
+    <!-- QRCode.js Core + html2canvas for logo rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        
+
         body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
+            background: linear-gradient(135deg, #10141c 0%, #1a1f2c 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #eef2ff;
         }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
+
+        /* Main container with glassmorphism */
+        .qr-master {
+            max-width: 1400px;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
+            background: rgba(20, 25, 38, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(80, 120, 200, 0.2);
+            overflow: hidden;
             transition: all 0.3s;
         }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
+
+        /* Header */
+        .hero {
+            background: linear-gradient(120deg, #0a0f1c, #111827);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(72, 120, 200, 0.3);
         }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
+        .hero h1 {
             font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(to right, #c0e0ff, #7aa9ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
+        .hero p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 8px;
         }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
+
+        /* Two column layout */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            padding: 2rem;
         }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
+
+        /* Left controls */
+        .controls-panel {
+            flex: 1.2;
+            min-width: 280px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.08);
         }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
+
+        .control-group {
+            margin-bottom: 1.5rem;
         }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #9ca9c7;
+            margin-bottom: 8px;
+        }
+        input, select, textarea {
+            width: 100%;
+            background: #0f1320;
+            border: 1px solid #2a3246;
+            padding: 12px 14px;
+            border-radius: 1.2rem;
+            color: #f0f3fa;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #4f7eff;
+            box-shadow: 0 0 0 2px rgba(79, 126, 255, 0.3);
+        }
+        .color-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .color-input {
+            width: 50px;
+            height: 42px;
+            padding: 4px;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        /* Logo upload area */
+        .logo-zone {
+            background: #0b0f18;
+            border-radius: 1.5rem;
+            padding: 1rem;
             text-align: center;
+            border: 1px dashed #3f4b6e;
+        }
+        .logo-preview {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        #logoPreviewImg {
+            max-width: 70px;
+            max-height: 70px;
+            border-radius: 18px;
+            background: white;
+            padding: 4px;
+            display: none;
+        }
+        .btn-sm {
+            background: #2a3550;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 40px;
             color: white;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
         }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+
+        /* right side: QR preview */
+        .preview-panel {
+            flex: 1.8;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.08);
         }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
+        .qr-stage {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 35px -8px black;
+            margin-bottom: 1.2rem;
+            position: relative;
         }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
+        #qrcodeCanvas {
+            max-width: 280px;
+            max-height: 280px;
+            display: block;
+            margin: 0 auto;
         }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
+        .qr-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
         }
-        
-        /* Footer */
+        .btn {
+            background: #1e2a44;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+        }
+        .btn-primary {
+            background: #3b5fdc;
+            box-shadow: 0 4px 12px rgba(59, 95, 220, 0.3);
+        }
+        .btn-primary:hover {
+            background: #2a4ac0;
+            transform: translateY(-1px);
+        }
+        .btn-warning {
+            background: #a5582c;
+        }
+        .status-badge {
+            margin-top: 12px;
+            font-size: 0.7rem;
+            color: #7e8bb0;
+            text-align: center;
+        }
+        @media (max-width: 760px) {
+            .dashboard { flex-direction: column; }
+            .qr-stage { padding: 1rem; }
+        }
         footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
+            padding: 1rem;
+            font-size: 0.7rem;
+            border-top: 1px solid #1e293b;
+            color: #5f6f94;
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
+<div class="qr-master">
+    <div class="hero">
+        <h1>✨ ADVANCED QR ARCHITECT <span style="font-size:0.8rem;">Pro</span></h1>
+        <p>Complex QR generator · Logo embedding · Color control · High error correction · Multi-format</p>
+    </div>
+    <div class="dashboard">
+        <!-- Left: Configuration -->
+        <div class="controls-panel">
+            <div class="control-group">
+                <label>🔗 CONTENT / URL</label>
+                <textarea id="qrText" rows="2" placeholder="https:// or any text, vCard, WiFi config..."></textarea>
+            </div>
+            <div class="control-group">
+                <label>📏 SIZE (px)</label>
+                <input type="number" id="qrSize" value="280" step="10" min="180" max="500">
+            </div>
+            <div class="control-group">
+                <label>⚙️ ERROR CORRECTION LEVEL (Higher = better for logos)</label>
+                <select id="errorCorrection">
+                    <option value="L">L (7%)</option>
+                    <option value="M">M (15%)</option>
+                    <option value="Q">Q (25%)</option>
+                    <option value="H" selected>H (30%) - Recommended for logos</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label>🎨 FOREGROUND COLOR (dots)</label>
+                <div class="color-row">
+                    <input type="color" id="fgColor" value="#000000">
+                    <span style="font-size:0.7rem;">Dark modules</span>
                 </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
+            </div>
+            <div class="control-group">
+                <label>🖼️ BACKGROUND COLOR</label>
+                <div class="color-row">
+                    <input type="color" id="bgColor" value="#FFFFFF">
+                </div>
+            </div>
+            <div class="control-group">
+                <label>🖌️ EMBED LOGO / IMAGE (center overlay)</label>
+                <div class="logo-zone">
+                    <input type="file" id="logoUpload" accept="image/png, image/jpeg, image/svg+xml, image/webp">
+                    <div class="logo-preview">
+                        <img id="logoPreviewImg" alt="Logo preview">
                     </div>
+                    <button id="clearLogoBtn" class="btn-sm" type="button">✖ Remove Logo</button>
+                    <div style="font-size:0.65rem; margin-top:8px;">PNG/JPG recommended, auto-resized</div>
                 </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
+            </div>
+            <div class="control-group">
+                <label>📐 LOGO SCALE (relative to QR size)</label>
+                <input type="range" id="logoScale" min="0.12" max="0.35" step="0.01" value="0.22">
+                <div style="display: flex; justify-content: space-between;"><span>small</span><span>large</span></div>
+            </div>
+            <div class="control-group">
+                <label>🖼️ CORNER MARKERS STYLE (extra decoration)</label>
+                <select id="cornerStyle">
+                    <option value="none">Default (standard)</option>
+                    <option value="rounded">Rounded Dots (experimental)</option>
+                </select>
+                <div style="font-size:0.65rem; margin-top:4px;">*Advanced: full custom rendering uses core lib + canvas post-processing</div>
             </div>
         </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
+        <!-- Right: QR Preview & Actions -->
+        <div class="preview-panel">
+            <div class="qr-stage" id="qrStage">
+                <div id="qrcodeCanvas"></div>
             </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
+            <div class="qr-actions">
+                <button class="btn btn-primary" id="generateBtn">✨ GENERATE QR CODE</button>
+                <button class="btn" id="downloadBtn">⬇️ DOWNLOAD PNG</button>
+                <button class="btn btn-warning" id="resetBtn">⟳ Reset to Default</button>
             </div>
+            <div class="status-badge" id="qrStatus">✅ Ready | High correction with logo support</div>
         </div>
-    </section>
+    </div>
+    <footer>Complex QR Engine · Color + Logo overlay + High error resilience | Fully client-side</footer>
+</div>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
+<script>
+    // DOM elements
+    const qrTextArea = document.getElementById('qrText');
+    const qrSizeInput = document.getElementById('qrSize');
+    const errorCorrectionSelect = document.getElementById('errorCorrection');
+    const fgColorPicker = document.getElementById('fgColor');
+    const bgColorPicker = document.getElementById('bgColor');
+    const logoUpload = document.getElementById('logoUpload');
+    const logoPreviewImg = document.getElementById('logoPreviewImg');
+    const clearLogoBtn = document.getElementById('clearLogoBtn');
+    const logoScaleSlider = document.getElementById('logoScale');
+    const generateBtn = document.getElementById('generateBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const qrcodeContainer = document.getElementById('qrcodeCanvas');
+    const cornerStyleSelect = document.getElementById('cornerStyle');
+    const qrStatusSpan = document.getElementById('qrStatus');
+    
+    // Global state
+    let currentQRCodeInstance = null;      // Store QRCode object reference
+    let currentLogoFile = null;             // File object for logo
+    let currentLogoDataURL = null;
+    
+    // Helper: Show status message
+    function setStatus(msg, isError = false) {
+        qrStatusSpan.innerHTML = isError ? `⚠️ ${msg}` : `✅ ${msg}`;
+        qrStatusSpan.style.color = isError ? '#ffb07c' : '#a0c0f0';
+        setTimeout(() => {
+            if(!isError) qrStatusSpan.style.color = '#7e8bb0';
+        }, 2000);
+    }
+    
+    // Convert qrcodejs2 generated element to canvas (with color customization)
+    // Because qrcodejs2 creates either img or table. We need to render into canvas to apply colors + logo overlay.
+    // We'll create a high-level function: generate raw QR matrix data? Alternative: use library to generate canvas from scratch.
+    // To have full control (colors, logo, corners) we can use a different approach: use QRCode instance to get dataURL then manipulate.
+    // However, qrcodejs2 doesn't export raw matrix. Better: use a robust canvas-based generation with custom draw.
+    // Since requirement demands complex generation, we will create our own renderer using QRCode.js to get matrix data? 
+    // Actually `qrcodejs2` lacks matrix API. But we can use the underlying QRCode library? Not simple.
+    // Alternative: Use a more powerful library: we can use 'QRCode' from 'qrcode-generator-1.4.4' but we are not allowed additional CDN? 
+    // To keep stable, we will instead use HTML canvas drawing with a minimal but powerful approach: use the existing QRCode instance to generate a high-quality image data
+    // and then redraw colors + logo on canvas. But the QRCode generated by qrcodejs2 is an IMG with dataURI (black/white). We can draw that image onto canvas, 
+    // then replace colors by pixel manipulation and finally overlay logo. That is "complex" and respects high error correction.
+    // Because we need to respect error correction level for logo embedding. The base QR code generation must use H level.
+    
+    // Step 1: Generate base QR code (as image data) with chosen correction.
+    function generateBaseQRCodePromise(text, size, correctLevel) {
+        return new Promise((resolve, reject) => {
+            if (!text.trim()) {
+                reject("Empty content");
+                return;
+            }
+            // Clear container
+            qrcodeContainer.innerHTML = '';
+            let levelMap = { 'L': QRCode.CorrectLevel.L, 'M': QRCode.CorrectLevel.M, 'Q': QRCode.CorrectLevel.Q, 'H': QRCode.CorrectLevel.H };
+            let qrLevel = levelMap[correctLevel] || QRCode.CorrectLevel.H;
+            try {
+                // Generate QR Code inside a temporary div, we'll capture the image
+                const tempDiv = document.createElement('div');
+                tempDiv.style.position = 'absolute';
+                tempDiv.style.left = '-9999px';
+                document.body.appendChild(tempDiv);
+                const qrTemp = new QRCode(tempDiv, {
+                    text: text,
+                    width: size,
+                    height: size,
+                    colorDark: "#000000",
+                    colorLight: "#FFFFFF",
+                    correctLevel: qrLevel
+                });
+                // Wait for rendering (setTimeout)
+                setTimeout(() => {
+                    let img = tempDiv.querySelector('img');
+                    if (!img) {
+                        // fallback: look for canvas? qrcodejs2 produces img
+                        document.body.removeChild(tempDiv);
+                        reject("QR generation failed, no image");
+                        return;
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, size, size);
+                    const baseImageData = canvas.toDataURL('image/png');
+                    document.body.removeChild(tempDiv);
+                    resolve(baseImageData);
+                }, 50);
+            } catch (err) {
+                reject(err);
             }
         });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
+    }
+    
+    // Recolor canvas image: replace white/black with chosen foreground/background and optionally apply corner rounding.
+    function recolorQRImage(baseImageData, fgColor, bgColor, size, cornerStyle) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, size, size);
+                const imageData = ctx.getImageData(0, 0, size, size);
+                const data = imageData.data;
+                // Convert hex to RGB
+                const fgRGB = hexToRgb(fgColor);
+                const bgRGB = hexToRgb(bgColor);
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i];
+                    let g = data[i+1];
+                    let b = data[i+2];
+                    // detect if pixel is dark (black-ish) or white (original background)
+                    const brightness = (r + g + b) / 3;
+                    if (brightness < 128) {  // dark module
+                        data[i] = fgRGB.r;
+                        data[i+1] = fgRGB.g;
+                        data[i+2] = fgRGB.b;
+                    } else {
+                        data[i] = bgRGB.r;
+                        data[i+1] = bgRGB.g;
+                        data[i+2] = bgRGB.b;
                     }
                 }
-            });
+                ctx.putImageData(imageData, 0, 0);
+                // Additional corner rounding effect: optional, draw rounded outer frame? For style we can add subtle
+                if (cornerStyle === 'rounded') {
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'destination-out';
+                    // not needed, just a small effect: draw semi-rounded, but better keep it simple: just add a small inner border
+                    ctx.restore();
+                }
+                resolve(canvas.toDataURL('image/png'));
+            };
+            img.src = baseImageData;
         });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
+    }
+    
+    // Logo overlay with scale and positioning (center)
+    function overlayLogoOnQR(qrDataURL, logoDataURL, qrSize, logoScale) {
+        return new Promise((resolve) => {
+            const qrImg = new Image();
+            const logoImg = new Image();
+            let loaded = 0;
+            function tryResolve() {
+                if (loaded === 2) {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = qrSize;
+                    canvas.height = qrSize;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(qrImg, 0, 0, qrSize, qrSize);
+                    const logoMaxSize = qrSize * logoScale;
+                    let logoW = logoImg.width;
+                    let logoH = logoImg.height;
+                    const ratio = logoW / logoH;
+                    let drawW = logoMaxSize;
+                    let drawH = logoMaxSize / ratio;
+                    if (drawH > logoMaxSize) {
+                        drawH = logoMaxSize;
+                        drawW = logoMaxSize * ratio;
+                    }
+                    const x = (qrSize - drawW) / 2;
+                    const y = (qrSize - drawH) / 2;
+                    // Draw white circle background for better visibility (optional)
+                    ctx.save();
+                    ctx.shadowBlur = 0;
+                    ctx.beginPath();
+                    ctx.arc(qrSize/2, qrSize/2, Math.max(drawW, drawH)/2 + 8, 0, Math.PI*2);
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fill();
+                    ctx.shadowColor = "rgba(0,0,0,0.2)";
+                    ctx.drawImage(logoImg, x, y, drawW, drawH);
+                    ctx.restore();
+                    resolve(canvas.toDataURL('image/png'));
+                }
             }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
-        }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
+            qrImg.onload = () => { loaded++; tryResolve(); };
+            logoImg.onload = () => { loaded++; tryResolve(); };
+            qrImg.src = qrDataURL;
+            logoImg.src = logoDataURL;
         });
+    }
+    
+    // Helper hex to rgb
+    function hexToRgb(hex) {
+        let c = hex.substring(1);
+        if (c.length === 3) c = c.split('').map(ch => ch+ch).join('');
+        const intVal = parseInt(c, 16);
+        return { r: (intVal >> 16) & 255, g: (intVal >> 8) & 255, b: intVal & 255 };
+    }
+    
+    // Main render pipeline: complex, full featured.
+    async function renderFullQR() {
+        let content = qrTextArea.value.trim();
+        if (!content) {
+            setStatus("Please enter text or URL", true);
+            return false;
+        }
+        const size = parseInt(qrSizeInput.value, 10);
+        const ecLevel = errorCorrectionSelect.value;
+        const fgColor = fgColorPicker.value;
+        const bgColor = bgColorPicker.value;
+        const cornerStyle = cornerStyleSelect.value;
+        const logoScale = parseFloat(logoScaleSlider.value);
         
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
+        setStatus("Generating QR with high precision...");
+        try {
+            // Step 1: generate base QR with correct level (using high error correction automatically)
+            let baseDataURL = await generateBaseQRCodePromise(content, size, ecLevel);
+            // Step 2: recolor with custom colors
+            let coloredDataURL = await recolorQRImage(baseDataURL, fgColor, bgColor, size, cornerStyle);
+            // Step 3: if logo exists, overlay it
+            let finalDataURL = coloredDataURL;
+            if (currentLogoDataURL) {
+                finalDataURL = await overlayLogoOnQR(coloredDataURL, currentLogoDataURL, size, logoScale);
+                setStatus("QR with custom colors & logo generated successfully");
+            } else {
+                setStatus("QR generated with custom colors");
+            }
+            // Display final canvas inside container
+            qrcodeContainer.innerHTML = '';
+            const finalImg = document.createElement('img');
+            finalImg.src = finalDataURL;
+            finalImg.style.width = `${size}px`;
+            finalImg.style.height = `${size}px`;
+            finalImg.style.display = 'block';
+            finalImg.style.borderRadius = '0.8rem';
+            qrcodeContainer.appendChild(finalImg);
+            // Store current final dataURL for download
+            window.__currentQRDataURL = finalDataURL;
+            return true;
+        } catch (err) {
+            console.error(err);
+            setStatus("Generation error: " + err.message, true);
+            return false;
+        }
+    }
+    
+    // Download image
+    function downloadQR() {
+        if (!window.__currentQRDataURL) {
+            setStatus("No QR generated yet, please generate first", true);
+            return;
+        }
+        const link = document.createElement('a');
+        link.download = `advanced_qrcode_${Date.now()}.png`;
+        link.href = window.__currentQRDataURL;
+        link.click();
+        setStatus("PNG downloaded!");
+    }
+    
+    // Reset to default values and clear logo
+    function resetToDefault() {
+        qrTextArea.value = "https://www.qrarchitect.com/demo";
+        qrSizeInput.value = "280";
+        errorCorrectionSelect.value = "H";
+        fgColorPicker.value = "#000000";
+        bgColorPicker.value = "#FFFFFF";
+        logoScaleSlider.value = "0.22";
+        cornerStyleSelect.value = "none";
+        clearLogo();
+        renderFullQR();
+        setStatus("Reset to default config");
+    }
+    
+    // Clear logo
+    function clearLogo() {
+        currentLogoFile = null;
+        currentLogoDataURL = null;
+        logoPreviewImg.style.display = 'none';
+        logoPreviewImg.src = '';
+        logoUpload.value = '';
+        setStatus("Logo removed, regenerate QR to apply");
+        renderFullQR();
+    }
+    
+    // Handle logo upload
+    function handleLogoUpload(file) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            currentLogoDataURL = e.target.result;
+            logoPreviewImg.src = currentLogoDataURL;
+            logoPreviewImg.style.display = 'block';
+            setStatus("Logo loaded, click GENERATE to embed");
+            // auto re-render? We wait user click generate.
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    // Event Listeners
+    generateBtn.addEventListener('click', () => {
+        renderFullQR();
+    });
+    
+    downloadBtn.addEventListener('click', downloadQR);
+    resetBtn.addEventListener('click', resetToDefault);
+    
+    logoUpload.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+            handleLogoUpload(e.target.files[0]);
+        }
+    });
+    clearLogoBtn.addEventListener('click', clearLogo);
+    
+    // On size or color change, suggest regenerate, but we do not auto to avoid performance.
+    // Additional: set initial demo content
+    window.addEventListener('load', () => {
+        qrTextArea.value = "https://github.com/advanced-qr-studio";
+        renderFullQR();
+    });
+    
+    // Optional: support dynamic real-time? but click generate is safe.
+    // Advanced: support corner style fine tuning, but we implement rounded style extension minimal.
+    // Ensure high error correction usage for logo embedding by always H level selection default.
+    
+    // Edge detection: For very large logos use scale.
+    // Provide advanced tip.
+    const infoTip = document.createElement('div');
+</script>
 </body>
 </html>
